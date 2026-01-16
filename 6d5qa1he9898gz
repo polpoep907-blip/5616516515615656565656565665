@@ -1,7 +1,27 @@
-
 print("64Bit")
 print("Any wrong doing will be logged!")
 print("Enjoy your script! and be sure to check for updates on new projects.")
+
+
+
+-- payload wrapper
+local function SafeCall(fn)
+    return xpcall(fn, function() end)
+end
+
+local function SafeConnect(signal, callback)
+    return signal:Connect(function(...)
+        local args = {...}
+        SafeCall(function()
+            callback(table.unpack(args))
+        end)
+    end)
+end
+
+
+
+
+
 
 -- main gui code and functions
 local G2L = {};
